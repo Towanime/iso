@@ -11,5 +11,6 @@ public class KeyboardMouseConfig : MonoBehaviour
     public KeyCode action;
     public KeyCode run;
     public bool invertY;
-    public float mouseSensitivity;
+    public float mouseXSensitivity;
+    public float mouseYSensitivity;
 }
