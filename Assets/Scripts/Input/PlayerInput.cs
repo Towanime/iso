@@ -6,6 +6,8 @@ public class PlayerInput : MonoBehaviour
 {
     [Tooltip("Current key configuration.")]
     public KeyboardMouseConfig config;
+    [Tooltip("Game object that will be used to know where the camera is facing.")]
+    public GameObject cameraAnchor;
     [Tooltip("Direction to where the player will move next.")]
     public Vector3 direction;
     [Tooltip("Rotation from the mouse to apply on the camera.")]
@@ -18,6 +20,7 @@ public class PlayerInput : MonoBehaviour
     /// True if the player is holding the run key.
     /// </summary>
     public bool run;
+    private Vector3 cameraDirection;
 
     void Update()
     {
@@ -30,27 +33,32 @@ public class PlayerInput : MonoBehaviour
 
     private void SetDirection()
     {
+        // merge these vars later
         this.direction = Vector3.zero;
+        this.cameraDirection = Vector3.zero;
 
         if (Input.GetKey(this.config.forward))
         {
-            this.direction += Vector3.forward;
+            this.direction += transform.forward;
+            this.cameraDirection += cameraAnchor.transform.forward;
         }
         else if (Input.GetKey(this.config.backwards))
         {
-            this.direction += Vector3.back;
+            this.direction -= transform.forward;
+            this.cameraDirection -= cameraAnchor.transform.forward;
         }
 
         if (Input.GetKey(this.config.left))
         {
-            this.direction += Vector3.left;
+            this.direction -= transform.right;
+            this.cameraDirection -= cameraAnchor.transform.right;
         }
         else if (Input.GetKey(this.config.right))
         {
-            this.direction += Vector3.right;
+            this.direction += transform.right;
+            this.cameraDirection += cameraAnchor.transform.right;
         }
-
-        this.direction = this.direction.normalized;
+        this.direction = this.cameraDirection.normalized;
     }
 
     private void SetRotation()

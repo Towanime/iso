@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public PlayerInput playerInput;
+    public GameObject avatar;
     public float walkSpeed = 3f;
+    public float rotationSpeed = 10f;
+    private float currentRotationVelocity = 0.0f;
+    private Vector3 currentRotationVelocityV = Vector3.zero;
     private CharacterController characterController;
+    private float initialY;
     private Camera camera;
 
     void Awake()
@@ -17,10 +22,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Vector3 newDir = Vector3.RotateTowards(avatar.transform.forward, this.playerInput.direction, rotationSpeed, 0.0f);
+        //newDir += Vector3.RotateTowards(transform.forward, camera.transform.forward, rotationSpeed, 0.0f);
+        //Debug.Log("Rotate towards: " + newDir);
+        avatar.transform.rotation = Quaternion.LookRotation(newDir);
         Vector3 direction = this.playerInput.direction * walkSpeed * Time.deltaTime;
 
         this.characterController.Move(direction);
-        this.transform.rotation *= Quaternion.Euler(0f, this.playerInput.rotation.x, 0f);
-        this.camera.transform.rotation *= Quaternion.Euler(this.playerInput.rotation.y, 0f, 0f);
     }
 }
