@@ -63,8 +63,8 @@ public class PlayerInput : MonoBehaviour
 
     private void SetRotation()
     {
-        float yaw = Input.GetAxis("Mouse X") * this.config.mouseSensitivity;
-        float pitch = Input.GetAxis("Mouse Y") * this.config.mouseSensitivity;
+        float yaw = Input.GetAxis("Mouse X") * this.config.mouseXSensitivity;
+        float pitch = Input.GetAxis("Mouse Y") * this.config.mouseYSensitivity;
 
         if (this.config.invertY)
         {
