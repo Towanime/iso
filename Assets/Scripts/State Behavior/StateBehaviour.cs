@@ -6,16 +6,19 @@ using UnityEngine;
 /// Implement all the logic depending that needs to be executed when depending on the state machine.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class StateBehavior<T> : MonoBehaviour {
-    /// <summary>
-    /// Main state machine where this state is used.
-    /// </summary>
-    private StateMachine<T> stateMachine;
+public abstract class StateBehaviour<T> : MonoBehaviour {
     /// <summary>
     /// Should be one of the different enums.
     /// </summary>
     /// <returns></returns>
     public abstract T GetState();
+
+    public abstract StateMachine<T> GetStateMachine();
+
+    void Start()
+    {
+        GetStateMachine().RegisterState(GetState(), this);
+    }
 
     public virtual void OnEnter()
     {

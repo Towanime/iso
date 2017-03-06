@@ -39,23 +39,19 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(this.config.forward))
         {
-            this.direction += transform.forward;
             this.cameraDirection += cameraAnchor.transform.forward;
         }
         else if (Input.GetKey(this.config.backwards))
         {
-            this.direction -= transform.forward;
             this.cameraDirection -= cameraAnchor.transform.forward;
         }
 
         if (Input.GetKey(this.config.left))
         {
-            this.direction -= transform.right;
             this.cameraDirection -= cameraAnchor.transform.right;
         }
         else if (Input.GetKey(this.config.right))
         {
-            this.direction += transform.right;
             this.cameraDirection += cameraAnchor.transform.right;
         }
         this.direction = this.cameraDirection.normalized;

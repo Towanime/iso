@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStateMachine : MonoBehaviour {
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class PlayerStateMachine : StateMachine<PlayerState> {
+
+    void Start()
+    {
+        currentState = PlayerState.Idle;
+        Initialize();
+    }
 }

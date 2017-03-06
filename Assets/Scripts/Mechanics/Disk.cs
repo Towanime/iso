@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class Disk : MonoBehaviour
 {
-    public PlayerInput playerInput;
     [Tooltip("Hand on the model from where the throw will begin.")]
     public GameObject anchor;
     /// <summary>
     /// Used for the throw calculations
     /// </summary>
     private GameObject target;
-    [Tooltip("Character to where the disk will return.")]
+    [Tooltip("Used to see where in what direction the throw should go.")]
     public GameObject avatar;
     [Tooltip("Hidden disk to show when throwing but not during the animations.")]
     public GameObject disk;
-    [Tooltip("Disk on the character model that will be hidding during the throw.")]
-    public GameObject dummyDisk;
     [Tooltip("How far in Z the disk will go.")]
     public float distance;
     [Tooltip("How fast the disk will go.")]
@@ -42,7 +39,6 @@ public class Disk : MonoBehaviour
 
     void Update()
     {
-
         switch (currentState)
         {
             case DiskStates.Thrown:
@@ -96,8 +92,7 @@ public class Disk : MonoBehaviour
         startPoint = anchor.transform.position;
         journeyLength = Vector3.Distance(anchor.transform.position, target.transform.position);
         // turn off/on renderers
-        disk.GetComponent<Renderer>().enabled = true;
-        dummyDisk.GetComponent<Renderer>().enabled = false;
+        //disk.GetComponent<Renderer>().enabled = true;
         // turn on collider
         diskCollider.enabled = true;
     }
@@ -116,8 +111,7 @@ public class Disk : MonoBehaviour
         currentState = DiskStates.Default;
         startTime = 0;
         // renderers and collider
-        disk.GetComponent<Renderer>().enabled = false;
-        dummyDisk.GetComponent<Renderer>().enabled = true;
+        //disk.GetComponent<Renderer>().enabled = false;
         diskCollider.enabled = false;
         // begin cooldown
     }

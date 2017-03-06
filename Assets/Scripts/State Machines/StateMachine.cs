@@ -6,30 +6,35 @@ public class StateMachine<T> : MonoBehaviour {
     /// <summary>
     /// Keep track of all the states for this kind of state machine.
     /// </summary>
-    private Dictionary<T, StateBehavior<T>> states = new Dictionary<T, StateBehavior<T>>();
+    protected Dictionary<T, StateBehaviour<T>> states = new Dictionary<T, StateBehaviour<T>>();
     /// <summary>
     /// Active state for the state machine.
     /// </summary>
-    private T currentState;
+    protected T currentState;
     /// <summary>
     /// Used to avoid null pointer exeptions in some cases.
     /// </summary>
-    private bool initialized;
+    protected bool initialized;
 
     /// <summary>
     /// Should be called by the child classes after setting the default state.
     /// </summary>
-    private void Initialize()
+    protected void Initialize()
     {
         initialized = true;
         states[currentState].OnEnter();
     }
 
+    public void RegisterState(T state, StateBehaviour<T> stateBehaviour)
+    {
+        states.Add(state, stateBehaviour);
+    }
+
     public void ChangeState(T nextState)
     {
         // swap states and call their exit and enter methods
-        StateBehavior<T> current = states[currentState];
-        StateBehavior<T> next = states[nextState];
+        StateBehaviour<T> current = states[currentState];
+        StateBehaviour<T> next = states[nextState];
         currentState = nextState;
         if (initialized)
         {
