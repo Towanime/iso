@@ -23,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Vector3 newDir = Vector3.RotateTowards(avatar.transform.forward, this.playerInput.direction, rotationSpeed, 0.0f);
-        //newDir += Vector3.RotateTowards(transform.forward, camera.transform.forward, rotationSpeed, 0.0f);
-        //Debug.Log("Rotate towards: " + newDir);
         avatar.transform.rotation = Quaternion.LookRotation(newDir);
         Vector3 direction = this.playerInput.direction * walkSpeed * Time.deltaTime;
 

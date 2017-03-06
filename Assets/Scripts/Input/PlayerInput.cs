@@ -81,6 +81,6 @@ public class PlayerInput : MonoBehaviour
 
     private void SetRun()
     {
-        this.run = Input.GetKey(this.config.run);
+        this.run = Input.GetKey(this.config.dash);
     }
 }
