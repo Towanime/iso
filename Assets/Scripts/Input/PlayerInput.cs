@@ -17,9 +17,9 @@ public class PlayerInput : MonoBehaviour
     /// </summary>
     public bool action;
     /// <summary>
-    /// True if the player is holding the run key.
+    /// True if the player is holding the run key. (Tracer's blink dummy version)
     /// </summary>
-    public bool run;
+    public bool blink;
     private Vector3 cameraDirection;
 
     void Update()
@@ -28,33 +28,31 @@ public class PlayerInput : MonoBehaviour
         this.SetDirection();
         this.SetRotation();
         this.SetAction();
-        this.SetRun();
+        this.SetBlink();
     }
 
     private void SetDirection()
     {
-        // merge these vars later
         this.direction = Vector3.zero;
-        this.cameraDirection = Vector3.zero;
 
         if (Input.GetKey(this.config.forward))
         {
-            this.cameraDirection += cameraAnchor.transform.forward;
+            this.direction += cameraAnchor.transform.forward;
         }
         else if (Input.GetKey(this.config.backwards))
         {
-            this.cameraDirection -= cameraAnchor.transform.forward;
+            this.direction -= cameraAnchor.transform.forward;
         }
 
         if (Input.GetKey(this.config.left))
         {
-            this.cameraDirection -= cameraAnchor.transform.right;
+            this.direction -= cameraAnchor.transform.right;
         }
         else if (Input.GetKey(this.config.right))
         {
-            this.cameraDirection += cameraAnchor.transform.right;
+            this.direction += cameraAnchor.transform.right;
         }
-        this.direction = this.cameraDirection.normalized;
+        this.direction = this.direction.normalized;
     }
 
     private void SetRotation()
@@ -75,8 +73,8 @@ public class PlayerInput : MonoBehaviour
         this.action = Input.GetKeyDown(this.config.action);
     }
 
-    private void SetRun()
+    private void SetBlink()
     {
-        this.run = Input.GetKey(this.config.dash);
+        this.blink = Input.GetKeyDown(this.config.blink);
     }
 }

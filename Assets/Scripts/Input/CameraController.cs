@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         offset = target.transform.position - transform.position;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void LateUpdate()

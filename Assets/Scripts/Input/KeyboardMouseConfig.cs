@@ -10,7 +10,7 @@ public class KeyboardMouseConfig : MonoBehaviour
     public KeyCode backwards;
     public KeyCode action;
     public KeyCode cancel;
-    public KeyCode dash;
+    public KeyCode blink;
     public bool invertY;
     public float mouseXSensitivity;
     public float mouseYSensitivity;

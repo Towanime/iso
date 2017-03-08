@@ -50,7 +50,6 @@ public class Disk : MonoBehaviour
                 if (fracJourney >= 1)
                 {
                     Comeback();
-                    //Debug.Log("Arm reached max distance! At: " + disk.transform.position.ToString());
                 }
                 break;
 
@@ -68,15 +67,8 @@ public class Disk : MonoBehaviour
         }
     }
 
-    public void BeginThrow()
-    {
-        currentState = DiskStates.WaitingAnimation;
-        animator.SetTrigger("Throw");
-    }
-
     public void Throw()
     {
-        //if (currentState != DiskState.WaitingAnimation) return;
         // start throw
         currentState = DiskStates.Thrown;
         collided = false;
@@ -91,8 +83,6 @@ public class Disk : MonoBehaviour
         disk.transform.rotation = anchor.transform.rotation;
         startPoint = anchor.transform.position;
         journeyLength = Vector3.Distance(anchor.transform.position, target.transform.position);
-        // turn off/on renderers
-        //disk.GetComponent<Renderer>().enabled = true;
         // turn on collider
         diskCollider.enabled = true;
     }
@@ -102,7 +92,7 @@ public class Disk : MonoBehaviour
         // start returning with delay
         currentState = DiskStates.Returning;
         startTime = Time.time;
-        startPoint = disk.transform.position;//target.transform.position;
+        startPoint = disk.transform.position;
         journeyLength = Vector3.Distance(startPoint, anchor.transform.position);
     }
 
@@ -111,9 +101,7 @@ public class Disk : MonoBehaviour
         currentState = DiskStates.Default;
         startTime = 0;
         // renderers and collider
-        //disk.GetComponent<Renderer>().enabled = false;
         diskCollider.enabled = false;
-        // begin cooldown
     }
     
     public void OnCollision(Collision collision)
