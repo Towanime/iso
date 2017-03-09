@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject avatar;
     [Tooltip("Moving speed for the avatar.")]
     public float walkSpeed = 10f;
+    [Tooltip("Max vertical speed to apply to the player when they are not touching the ground.")]
+    public float maxVerticalSpeed = 3f;
+    [Tooltip("Gravity for the player avatar.")]
+    public float gravity = 2f;
     [Tooltip("Position modifier when the player blinks.")]
     public float blinkDistance = 20f;
     [Tooltip("Rotation rate between directions.")]
@@ -17,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     public float rotationOppositeDirectionModifier = 2f;
     [Tooltip("TrailRenderer used when the player blinks.")]
     public TrailRenderer blinkTrailRenderer;
+    public GroundCheck groundCheck;
+    public Animator animator;
     private CharacterController characterController;
     // after blink or normal move calculations
     private float movementSpeed;
@@ -40,11 +46,23 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         nextDirection = this.playerInput.direction;
+        // check if the avatar needs to rotate
         RotationUpdate();
+        // check movement and blink ability
         MovementSpeedUpdate();
+        // apply gravity
+        VerticalSpeedUpdate();
+        // move the direction after all the calculations
         Vector3 direction = nextDirection * movementSpeed;
-
         this.characterController.Move(direction);
+    }
+
+    void VerticalSpeedUpdate()
+    {
+        if (!groundCheck.IsGrounded)
+        {
+            nextDirection.y = Mathf.Clamp(nextDirection.y - gravity, -maxVerticalSpeed, maxVerticalSpeed);
+        }
     }
 
     /// <summary>

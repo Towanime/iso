@@ -9,5 +9,6 @@ public class AnimationChecker : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         animator.SetBool("IsRunning", playerInput.direction != Vector3.zero);
-	}
+        animator.SetBool("Blink", playerInput.blink);
+    }
 }
