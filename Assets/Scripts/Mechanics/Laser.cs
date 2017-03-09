@@ -4,50 +4,53 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
+    [Tooltip("Line renderer for the laser.")]
     public LineRenderer line;
+    [Tooltip("Starting point for the laser.")]
     public GameObject emissor;
+    [Tooltip("Total distancefor the laser from the start point.")]
+    public float distance = 80;
+    [Tooltip("Damage to apply on contact.")]
     public float damage;
+    [Tooltip("Player avatar that will be rotated.")]
     public float damageRate = 1;
+    // used while there is a damageable entity touching the laser
     private DamageableEntity target;
     private bool firstHit;
 
     // Use this for initialization
     void Start () {
-        line.enabled = false;
         StartCoroutine("FireLaser");
-        //FireLaser();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-
-        //StartCoroutine("FireLaser");
     }
 
     private IEnumerator FireLaser()
     {
-        line.enabled = true;
         while (true)
         {
             Ray ray = new Ray(emissor.transform.position, emissor.transform.forward);
             RaycastHit hit;
 
             line.SetPosition(0, ray.origin);
-            if (Physics.Raycast(ray, out hit, 100))
+            if (Physics.Raycast(ray, out hit, distance))
             {
                 line.SetPosition(1, hit.point);
                 target = hit.collider.gameObject.GetComponent<DamageableEntity>();
-                if (!firstHit)
+                //Debug.Log("Hitting: " + hit.collider.name + " with damageable entity? " + (target != null));
+                if (hit.collider.CompareTag("Player") && target != null && !firstHit)
                 {
                     DoDamage();
                     firstHit = true;
+                }else
+                {
+                    // reset hit if it's not a damageable entity
+                    firstHit = false;
                 }
             }
             else
             {
                 target = null;
                 firstHit = false;
-                line.SetPosition(1, ray.GetPoint(100));
+                line.SetPosition(1, ray.GetPoint(distance));
             }
             yield return null;
         }

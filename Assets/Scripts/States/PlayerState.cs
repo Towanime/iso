@@ -7,5 +7,5 @@ public enum PlayerState {
     Walking,
     Dashing,
     Aiming,
-    DiskThrow
+    PulseBomb
 }

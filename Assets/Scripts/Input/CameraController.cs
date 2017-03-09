@@ -18,12 +18,11 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        float horizontal = playerInput.rotation.x;//Input.GetAxis("Mouse X") * rotationSpeed;
+        float horizontal = playerInput.rotation.x;
 
         // rotate the camera around the avatar
         transform.RotateAround(target.transform.position, Vector3.up, horizontal * Time.deltaTime);
         // update dummy
         dummy.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        //transform.LookAt(target.transform);
     }
 }

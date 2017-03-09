@@ -2,26 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Entity with life points that can be damaged and destroyed.
+/// </summary>
 public class DamageableEntity : MonoBehaviour
 {
     public bool ignoreDamage = false;
     public float life;
-    protected float currentLife;
     public GameObject checkpoint;
+    public bool destroyOnDeath;
+    protected float currentLife;
 
     void Start()
     {
         currentLife = life;
     }
 
-    public virtual bool OnDamage(GameObject origin, float damage)
+    public virtual bool OnDamage(GameObject origin, float damage, float delayDeath = 0)
     {
         //Debug.Log("Damage on object: " + gameObject.name);
         if (ignoreDamage) return false;
         ModifyCurrentLife(damage);
         if (currentLife <= 0)
         {
-            OnDeath();
+            Invoke("OnDeath", delayDeath);
         }
         return true;
     }
@@ -38,7 +42,10 @@ public class DamageableEntity : MonoBehaviour
             Refresh();
             gameObject.transform.position = checkpoint.transform.position;
         }
-        //Destroy(gameObject);
+        if (destroyOnDeath)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public virtual void Refresh()

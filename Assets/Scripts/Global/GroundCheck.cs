@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-
+    [Tooltip("Transform to use to see if there is ground collision.")]
     public Transform groundCheckObject;
+    [Tooltip("Ground layer to check.")]
     public LayerMask groundLayer;
+    [Tooltip("Y limit when falling to the void.")]
     public float yVoidLimit;
     public float groundRadius = 0.2f;
     private bool grounded = false;

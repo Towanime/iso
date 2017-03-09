@@ -28,7 +28,7 @@ public class IdleStateBehaviour : StateBehaviour<PlayerState> {
     {
         if (playerInput.action)
         {
-            playerStateMachine.ChangeState(PlayerState.DiskThrow);
+            playerStateMachine.ChangeState(PlayerState.PulseBomb);
         }
     }
 }
